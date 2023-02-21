@@ -23,14 +23,6 @@ print_string "================ START ================\n";; flush stdout ;;
 open Bos;;
 open Rresult ;;
 
-let file_contents f =
-  f |> Fpath.v |> OS.File.read |> R.get_ok
-
-
-let s = file_contents "examples/eg1.ml";;
-
-s |> PAPR.Implem.pa1 |> PAPR.Implem.pr |> print_string ;;
-
 (*
 ;;; Local Variables: ***
 ;;; mode:tuareg ***
