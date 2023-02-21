@@ -1,0 +1,39 @@
+#use "topfind.camlp5";;
+#camlp5o ;;
+#require "pa_ppx.testutils";;
+open Pa_ppx_testutils.Papr_util ;;
+
+#require "camlp5.pr_o" ;;
+
+let pp_ctyp ty = Fmt.(pf stdout "#<ctyp< %s >>" (Eprinter.apply Pcaml.pr_ctyp Pprintf.empty_pc ty));;
+let pp_expr ty = Fmt.(pf stdout "#<expr< %s >>" (Eprinter.apply Pcaml.pr_expr Pprintf.empty_pc ty));;
+let pp_patt ty = Fmt.(pf stdout "#<patt< %s >>" (Eprinter.apply Pcaml.pr_patt Pprintf.empty_pc ty));;
+
+#install_printer pp_ctyp ;;
+#install_printer pp_expr ;;
+#install_printer pp_patt ;;
+
+
+print_string "================ START ================\n";; flush stdout ;;
+
+#require "camlp5.quotations" ;;
+#require "bos";;
+#require "rresult";;
+
+open Bos;;
+open Rresult ;;
+
+let file_contents f =
+  f |> Fpath.v |> OS.File.read |> R.get_ok
+
+
+let s = file_contents "examples/eg1.ml";;
+
+s |> PAPR.Implem.pa1 |> PAPR.Implem.pr |> print_string ;;
+
+(*
+;;; Local Variables: ***
+;;; mode:tuareg ***
+;;; End: ***
+
+*)
